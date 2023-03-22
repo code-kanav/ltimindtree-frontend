@@ -41,16 +41,21 @@ function Register() {
     }
   };
 
-  const validatePassword = () => {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-    if (!passwordPattern.test(password)) {
-      setPasswordError(false);
-      console.log("passwordError", passwordError)
-    } else {
-      setPasswordError(true);
-      console.log("passwordError", passwordError)
-    }
-  };
+  // const validatePassword = () => {
+  //   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  //   if (!passwordPattern.test(password)) {
+  //     setPasswordError(false);
+  //     console.log("passwordError", passwordError)
+  //   } else {
+  //     setPasswordError(true);
+  //     console.log("passwordError", passwordError)
+  //   }
+  // };
+  // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  // if (!passwordRegex.test(password)) {
+  //   setError('Password should contain minimum 8 characters with at least 1 Uppercase and 1 special character');
+  //   return;
+  // }
 
   const notify = React.useCallback((type, message) => {
     ToastMessage({ type, message });
@@ -60,31 +65,31 @@ function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     validateEmail();
-    validatePassword();
+    // validatePassword();
     // Check if the password and confirm password match
     if (password !== confirmPassword) {
       notify("error", "passwords do not match.");
       return;
     }
-    fetch("https://ltimindtree-backend.onrender.com/users")
+    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json")
       .then((response) => response.json())
       .then((data) => {
         const emailExists = data.users.some((user) => user.email === email);
         if (emailExists || email === "") {
           setErrorMessage("Email already exists. Please choose a different email.");
           notify("error", "Email already exists.");
-        } else {
-          if (passwordError === false || emailError === false) {
-            notify("error", "enter valid email and pass");
-          }
+        } 
+          // if (passwordError === false || emailError === false) {
+          //   notify("error", "enter valid email and pass");
+          // }
           else {
             const userData = { email, password, confirmPassword };
-            fetch("https://ltimindtree-backend.onrender.com/users")
+            fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json")
               .then((response) => response.json())
               .then((data) => {
                 const users = [...data.users, userData];
                 const newData = { users };
-                return fetch("https://ltimindtree-backend.onrender.com/createusers", {
+                return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/createusers", {
                   method: "POST",
                   headers: {
                     'Accept': 'application/json',
@@ -100,7 +105,6 @@ function Register() {
                 console.error("Error:", error);
               });
           }
-        }
 
       })
   };

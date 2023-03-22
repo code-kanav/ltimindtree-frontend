@@ -34,6 +34,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LogoutIcon from "@mui/icons-material/Logout";
 import EventCard from "./components/eventCard";
 import { v4 as uuidv4 } from "uuid";
+import NormalEventCard from "./components/normalEvent";
 
 function Copyright(props) {
   return (
@@ -119,7 +120,7 @@ function DashboardContent() {
   const userEmail = localStorage.getItem("userEmail");
 
   function getAllEvents() {
-    fetch("https://ltimindtree-backend.onrender.com/events")
+    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
       .then((response) => response.json())
       .then((data) => {
         const filteredEvents = data.events.filter(
@@ -154,13 +155,13 @@ function DashboardContent() {
       userEmail,
       uniqueId,
     };
-    fetch("https://ltimindtree-backend.onrender.com/events")
+    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
       .then((response) => response.json())
       .then((data) => {
         const events = [...data.events, eventData];
         setUserEvents([...data.events, eventData]);
         const newData = { events };
-        return fetch("https://ltimindtree-backend.onrender.com/createevents", {
+        return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/createevents", {
           method: "POST",
           body: JSON.stringify(newData),
           headers: {
@@ -468,12 +469,12 @@ function DashboardContent() {
                     <div className="normalBox">
                       {ev
                         ? userEvents
-                          .filter((e) => e.bookingType === "normal")
-                          .map((event, j) => (
-                            <div key={j}>
-                              <EventCard
+                          
+                          .map((event, i) => (
+                            <div key={i}>
+                              <NormalEventCard
                                 data={event}
-                                index={parseInt(j) + 7}
+                                index={i}
                                 setUserEventsDash={setUserEvents}
                               />
                             </div>

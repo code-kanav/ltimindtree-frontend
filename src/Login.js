@@ -41,7 +41,7 @@ function Login() {
     validateEmail();
     validatePassword();
     // Check if the user exists in the JSON file
-    fetch("https://ltimindtree-backend.onrender.com/users")
+    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json")
       .then((response) => response.json())
       .then((data) => {
         const user = data.users.find((user) => user.email === email && user.password === password);

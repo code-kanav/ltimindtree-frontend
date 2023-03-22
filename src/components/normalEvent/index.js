@@ -25,7 +25,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-export default function EventCard({ data, index, setUserEventsDash }) {
+export default function NormalEventCard({ data, index, setUserEventsDash }) {
   const [open, setOpen] = React.useState(false);
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -35,6 +35,7 @@ export default function EventCard({ data, index, setUserEventsDash }) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [userEvents, setUserEvents] = useState([]);
   const [ev, eventUpdate] = useState(false);
+
 
   function getAllEvents() {
     fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
@@ -122,8 +123,15 @@ export default function EventCard({ data, index, setUserEventsDash }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+
+  
+
   return (
     <>
+    {data.bookingType === "normal"?
+    
+    
       <Card
         sx={{
           width: "100%",
@@ -197,6 +205,9 @@ export default function EventCard({ data, index, setUserEventsDash }) {
           </Typography>
         </Box>
       </Card>
+
+        :
+        null}
       <Dialog
         open={open}
       >
@@ -313,6 +324,10 @@ export default function EventCard({ data, index, setUserEventsDash }) {
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
+    
+                
+      
     </>
+    
   );
 }
