@@ -119,7 +119,7 @@ function DashboardContent() {
   const userEmail = localStorage.getItem("userEmail");
 
   function getAllEvents() {
-    fetch("https://ltimindtree-backend.vercel.app/events")
+    fetch("https://ltimindtree-backend.onrender.com/events")
       .then((response) => response.json())
       .then((data) => {
         const filteredEvents = data.events.filter(
@@ -154,13 +154,13 @@ function DashboardContent() {
       userEmail,
       uniqueId,
     };
-    fetch("https://ltimindtree-backend.vercel.app/events")
+    fetch("https://ltimindtree-backend.onrender.com/events")
       .then((response) => response.json())
       .then((data) => {
         const events = [...data.events, eventData];
         setUserEvents([...data.events, eventData]);
         const newData = { events };
-        return fetch("https://ltimindtree-backend.vercel.app/createevents", {
+        return fetch("https://ltimindtree-backend.onrender.com/createevents", {
           method: "POST",
           body: JSON.stringify(newData),
           headers: {

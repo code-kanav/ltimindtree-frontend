@@ -66,7 +66,7 @@ function Register() {
       notify("error", "passwords do not match.");
       return;
     }
-    fetch("https://ltimindtree-backend.vercel.app/users")
+    fetch("https://ltimindtree-backend.onrender.com/users")
       .then((response) => response.json())
       .then((data) => {
         const emailExists = data.users.some((user) => user.email === email);
@@ -79,12 +79,12 @@ function Register() {
           }
           else {
             const userData = { email, password, confirmPassword };
-            fetch("https://ltimindtree-backend.vercel.app/users")
+            fetch("https://ltimindtree-backend.onrender.com/users")
               .then((response) => response.json())
               .then((data) => {
                 const users = [...data.users, userData];
                 const newData = { users };
-                return fetch("https://ltimindtree-backend.vercel.app/createusers", {
+                return fetch("https://ltimindtree-backend.onrender.com/createusers", {
                   method: "POST",
                   headers: {
                     'Accept': 'application/json',
