@@ -71,7 +71,14 @@ function Register() {
       notify("error", "passwords do not match.");
       return;
     }
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json")
+    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json",{
+      method: "GET",
+      headers: {
+        'x-cors-api-key': 'temp_e7774af2e127acf864392117f99e00c3',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         const emailExists = data.users.some((user) => user.email === email);
@@ -84,7 +91,14 @@ function Register() {
           // }
           else {
             const userData = { email, password, confirmPassword };
-            fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json")
+            fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json",{
+              method: "GET",
+              headers: {
+                'x-cors-api-key': 'temp_e7774af2e127acf864392117f99e00c3',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            })
               .then((response) => response.json())
               .then((data) => {
                 const users = [...data.users, userData];
@@ -92,6 +106,7 @@ function Register() {
                 return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/createusers", {
                   method: "POST",
                   headers: {
+                    'x-cors-api-key': 'temp_e7774af2e127acf864392117f99e00c3',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                   },
