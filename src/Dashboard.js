@@ -120,7 +120,7 @@ function DashboardContent() {
   const userEmail = localStorage.getItem("userEmail");
 
   function getAllEvents() {
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
+    fetch("http://localhost:3000/events")
       .then((response) => response.json())
       .then((data) => {
         const filteredEvents = data.events.filter(
@@ -155,13 +155,13 @@ function DashboardContent() {
       userEmail,
       uniqueId,
     };
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
+    fetch("http://localhost:3000/events")
       .then((response) => response.json())
       .then((data) => {
         const events = [...data.events, eventData];
         setUserEvents([...data.events, eventData]);
         const newData = { events };
-        return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/createevents", {
+        return fetch("http://localhost:3000/createevents", {
           method: "POST",
           body: JSON.stringify(newData),
           headers: {

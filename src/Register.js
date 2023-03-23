@@ -15,10 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ToastMessage from "./components/Toast";
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © Your Website '}
-      {new Date().getFullYear()}
-      {'.'}<br />
+    <Typography variant="body2" color="text" align="center" {...props}>
       {'Password Hint:Qwertyuiop@1'}
     </Typography>
   );
@@ -41,21 +38,16 @@ function Register() {
     }
   };
 
-  // const validatePassword = () => {
-  //   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-  //   if (!passwordPattern.test(password)) {
-  //     setPasswordError(false);
-  //     console.log("passwordError", passwordError)
-  //   } else {
-  //     setPasswordError(true);
-  //     console.log("passwordError", passwordError)
-  //   }
-  // };
-  // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-  // if (!passwordRegex.test(password)) {
-  //   setError('Password should contain minimum 8 characters with at least 1 Uppercase and 1 special character');
-  //   return;
-  // }
+  const validatePassword = () => {
+    const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+    if (!passwordPattern.test(password)) {
+      setPasswordError(false);
+      console.log("passwordError", passwordError)
+    } else {
+      setPasswordError(true);
+      console.log("passwordError", passwordError)
+    }
+  };
 
   const notify = React.useCallback((type, message) => {
     ToastMessage({ type, message });
@@ -65,13 +57,13 @@ function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     validateEmail();
-    // validatePassword();
+    validatePassword();
     // Check if the password and confirm password match
     if (password !== confirmPassword) {
       notify("error", "passwords do not match.");
       return;
     }
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json",{
+    fetch("http://localhost:3000/users", {
       method: "GET",
       headers: {
         'x-cors-api-key': 'temp_e7774af2e127acf864392117f99e00c3',
@@ -85,13 +77,14 @@ function Register() {
         if (emailExists || email === "") {
           setErrorMessage("Email already exists. Please choose a different email.");
           notify("error", "Email already exists.");
-        } 
-          // if (passwordError === false || emailError === false) {
-          //   notify("error", "enter valid email and pass");
-          // }
+        }
+        else {
+          if (passwordError === false || emailError === false) {
+            notify("error", "enter valid email and pass");
+          }
           else {
             const userData = { email, password, confirmPassword };
-            fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/users.json",{
+            fetch("http://localhost:3000/users", {
               method: "GET",
               headers: {
                 'x-cors-api-key': 'temp_e7774af2e127acf864392117f99e00c3',
@@ -103,7 +96,7 @@ function Register() {
               .then((data) => {
                 const users = [...data.users, userData];
                 const newData = { users };
-                return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/createusers", {
+                return fetch("http://localhost:3000/createusers", {
                   method: "POST",
                   headers: {
                     'x-cors-api-key': 'temp_e7774af2e127acf864392117f99e00c3',
@@ -120,6 +113,7 @@ function Register() {
                 console.error("Error:", error);
               });
           }
+        }
 
       })
   };

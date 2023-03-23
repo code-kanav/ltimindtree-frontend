@@ -37,7 +37,7 @@ export default function EventCard({ data, index, setUserEventsDash }) {
   const [ev, eventUpdate] = useState(false);
 
   function getAllEvents() {
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
+    fetch("http://localhost:3000/events")
       .then((response) => response.json())
       .then((data1) => {
         const filteredEvents = data1.events.filter(
@@ -68,14 +68,14 @@ export default function EventCard({ data, index, setUserEventsDash }) {
       termsAccepted,
       userEmail,
     };
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
+    fetch("http://localhost:3000/events")
       .then((response) => response.json())
       .then((data) => {
         //  data.events=eventData;
         const tempData = data.events;
         tempData.splice(index, 1, eventData);
         setUserEventsDash(tempData)
-        return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/updateevent", {
+        return fetch("http://localhost:3000/updateevent", {
           method: "POST",
           body: JSON.stringify({ events: tempData }),
           headers: {
@@ -93,13 +93,13 @@ export default function EventCard({ data, index, setUserEventsDash }) {
 
   const handleDelete = (event, index) => {
     event.preventDefault();
-    fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/events")
+    fetch("http://localhost:3000/events")
       .then((response) => response.json())
       .then((data) => {
         const tempData = data.events;
         tempData.splice(index, 1);
         setUserEventsDash(tempData);
-        return fetch("https://main.d2pkwg7itkuuhm.amplifyapp.com/deleteevent", {
+        return fetch("http://localhost:3000/deleteevent", {
           method: "POST",
           body: JSON.stringify({ events: tempData }),
           headers: {
